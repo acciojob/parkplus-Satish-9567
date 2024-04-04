@@ -1,33 +1,50 @@
 package com.driver.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.security.GeneralSecurityException;
 
 @Entity
 public class Reservation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @ManyToOne
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private  Integer id;
+    private Integer numberOfHours;
     @JoinColumn
+    @ManyToOne
     private User user;
 
-    @ManyToOne
     @JoinColumn
+    @ManyToOne
     private Spot spot;
 
     @OneToOne(mappedBy = "reservation",cascade = CascadeType.ALL)
     private Payment payment;
 
-    private int numberOfHours;
+    public Reservation() {
+    }
 
-    public int getId() {
+    public Reservation(Integer id, Integer numberOfHours, User user, Spot spot, Payment payment) {
+        this.id = id;
+        this.numberOfHours = numberOfHours;
+        this.user = user;
+        this.spot = spot;
+        this.payment = payment;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getNumberOfHours() {
+        return numberOfHours;
+    }
+
+    public void setNumberOfHours(Integer numberOfHours) {
+        this.numberOfHours = numberOfHours;
     }
 
     public User getUser() {
@@ -52,13 +69,5 @@ public class Reservation {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
-    }
-
-    public int getNumberOfHours() {
-        return numberOfHours;
-    }
-
-    public void setNumberOfHours(int numberOfHours) {
-        this.numberOfHours = numberOfHours;
     }
 }
