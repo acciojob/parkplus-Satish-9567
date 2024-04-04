@@ -5,37 +5,47 @@ import javax.persistence.*;
 @Entity
 public class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    private Boolean paymentCompleted;
 
-    @OneToOne
+    @Enumerated(value = EnumType.STRING)
+    private PaymentMode paymentMode;
+
     @JoinColumn
+    @OneToOne
     private Reservation reservation;
 
-    boolean paymentCompleted;
-    PaymentMode paymentMode;
-
-    public int getId() {
-        return id;
+    public Payment() {
     }
 
-    public void setId(int id) {
+    public Payment(Integer id, Boolean paymentCompleted, PaymentMode paymentMode, Reservation reservation) {
         this.id = id;
-    }
-
-    public Reservation getReservation() {
-        return reservation;
-    }
-
-    public void setReservation(Reservation reservation) {
+        this.paymentCompleted = paymentCompleted;
+        this.paymentMode = paymentMode;
         this.reservation = reservation;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public boolean isPaymentCompleted() {
         return paymentCompleted;
     }
 
     public void setPaymentCompleted(boolean paymentCompleted) {
+        this.paymentCompleted = paymentCompleted;
+    }
+
+    public Boolean getPaymentCompleted() {
+        return paymentCompleted;
+    }
+
+    public void setPaymentCompleted(Boolean paymentCompleted) {
         this.paymentCompleted = paymentCompleted;
     }
 
@@ -45,5 +55,13 @@ public class Payment {
 
     public void setPaymentMode(PaymentMode paymentMode) {
         this.paymentMode = paymentMode;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 }
